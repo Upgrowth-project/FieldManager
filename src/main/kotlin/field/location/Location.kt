@@ -6,7 +6,7 @@ import field.utils.*
 import logger.logger
 import java.util.*
 
-class Location(val name: String, topology: LocationTopology, size: Int) {
+class Location(val id: Int, val name: String, topology: LocationTopology, size: Int) {
 
     val animals: ArrayList<BaseAnimal> = ArrayList()
     val goodsFunctions: GoodsFunctions = makeGoodsFunctions(this)
