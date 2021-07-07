@@ -4,7 +4,7 @@ plugins {
     kotlin("jvm") version "1.4.32"
 }
 
-group = "me.user"
+group = "ru.honfate.upgrowth"
 version = "1.0-SNAPSHOT"
 
 dependencies {
