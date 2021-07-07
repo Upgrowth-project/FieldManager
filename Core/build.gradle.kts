@@ -11,10 +11,14 @@ dependencies {
     testImplementation(kotlin("test-junit"))
 }
 
+repositories {
+    jcenter()
+}
+
 tasks.test {
     useJUnit()
 }
 
 tasks.withType<KotlinCompile>() {
-    kotlinOptions.jvmTarget = "13"
+    kotlinOptions.jvmTarget = "1.8"
 }
