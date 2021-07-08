@@ -18,19 +18,19 @@
 
 | Метод | Описание |
 |------|------------|
-| Метод | Описание |
-| Метод | Описание |
-| Метод | Описание |
-| Метод | Описание |
-| Метод | Описание |
-| Метод | Описание |
-| Метод | Описание |
-| Метод | Описание |
-| Метод | Описание |
-| Метод | Описание |
-| Метод | Описание |
-| Метод | Описание |
-| Метод | Описание |
+| <T> refresh(entity: T): T | чево |
+| giveCards(player: Player, number: Int) | дать игроку определенное количество карт |
+| amountOfCards(player: Player, location: Location): Int | количество карт, которое должен получить игрок за данную локацию |
+| addAnimal(location: Location, player: Player): Animal | создать в локации новое животное игрока и вернуть его |
+| deleteAnimal(animal: Animal) | удалить животное с поля |
+| moveAnimal(animal: Animal, destination: Location) | переместить животное в новую локацию |
+| addProperty(property: Property, animal: Animal) | добавить животному свойство |
+| deleteProperty(property: Property, animal: Animal) | удалить свойство у животного |
+| generateFood(location: Location) | сгенерировать еду в этой локации |
+| food(location: Location): Int | количество еды в локации |
+| setFood(location: Location, number: Int) | установить количество еды в локации |
+| setFood(animal: Animal, number: Int) | установить количество пищи, съеденное животным (если животное не может столько съесть, установится максимальное число еды для него) |
+| canMove(from: Location, to: Location): Boolean | возвращает true, если можно осуществить непосредственный переход между локациями |
 
 
 
