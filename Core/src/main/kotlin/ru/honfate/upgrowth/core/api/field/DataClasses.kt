@@ -24,7 +24,6 @@ data class Animal(
     var name: String,
     val isActive: Boolean,
     val properties: MutableCollection<Property>,
-    var location: Location,
     val owner: Player?,
     val foodNeeded: Int, // Количество еды, необходимое для выживания
     var foodGot: Int     // Количество еды, которое животное получило

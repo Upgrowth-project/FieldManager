@@ -24,6 +24,7 @@
 | addAnimal(location: Location, player: Player): Animal | создать в локации новое животное игрока и вернуть его |
 | deleteAnimal(animal: Animal) | удалить животное с поля |
 | moveAnimal(animal: Animal, destination: Location) | переместить животное в новую локацию |
+| getLocation(animal: Animal): Location | найти локацию, в которой находится животное |
 | addProperty(property: Property, animal: Animal) | добавить животному свойство |
 | deleteProperty(property: Property, animal: Animal) | удалить свойство у животного |
 | generateFood(location: Location) | сгенерировать еду в этой локации |

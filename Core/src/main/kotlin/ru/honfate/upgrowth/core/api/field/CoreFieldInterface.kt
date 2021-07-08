@@ -20,6 +20,7 @@ interface CoreFieldInterface {
     fun addAnimal(location: Location, player: Player): Animal
     fun deleteAnimal(animal: Animal)
     fun moveAnimal(animal: Animal, destination: Location)
+    fun getLocation(animal: Animal): Location
 
     fun addProperty(property: Property, animal: Animal)
     fun deleteProperty(property: Property, animal: Animal)
