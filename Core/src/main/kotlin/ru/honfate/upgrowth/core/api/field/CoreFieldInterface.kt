@@ -22,7 +22,7 @@ interface CoreFieldInterface {
     fun moveAnimal(animal: Animal, destination: Location)
 
     fun addProperty(property: Property, animal: Animal)
-    fun deleteProperty(property: Property)
+    fun deleteProperty(property: Property, animal: Animal)
 
     fun generateFood(location: Location)
     // Количество еды в локации

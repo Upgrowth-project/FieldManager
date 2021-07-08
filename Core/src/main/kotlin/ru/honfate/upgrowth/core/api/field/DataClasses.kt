@@ -16,18 +16,18 @@ data class Player(
     val id: Int,
     val name: String,
     val hand: MutableCollection<Card>,
-    val animals: Array<Animal>
+    val animals: MutableCollection<Animal>
 )
 
 data class Animal(
     val id: Int,
     val name: String,
     val isActive: Boolean,
-    val properties: Array<Property>,
+    val properties: MutableCollection<Property>,
     val location: Location,
     val owner: Player?,
     val foodNeeded: Int, // Количество еды, необходимое для выживания
-    val foodGot: Int     // Количество еды, которое животное получило
+    var foodGot: Int     // Количество еды, которое животное получило
 )
 
 data class Location(
@@ -36,11 +36,15 @@ data class Location(
     val animals: MutableCollection<Animal>,
     val hasWater: Boolean,
     val hasLand: Boolean,
-    val goodsFunctions: GoodsFunctions
+    val goodsFunctions: GoodsFunctions,
+
+    var food: Int
 )
 
 // структура данных, используемая для инициализации FieldManager
 data class FieldManagerInitializer(
     val players: Array<Player>,
-    val locations: Array<Location>
+    val locations: Array<Location>,
+    val deck: MutableList<Card>,
+    val neighboringLocations: Array<Array<Boolean>>
 )
