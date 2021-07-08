@@ -13,7 +13,7 @@ interface CoreFieldInterface {
     // Размер колоды
     val deckSize: Int
     // Игроку передается нужное количество карт из колоды
-    fun giveCards(player: Player, number: Number)
+    fun giveCards(player: Player, number: Int)
     // Количество карт, согласно функции благ
     fun amountOfCards(player: Player, location: Location): Int
 

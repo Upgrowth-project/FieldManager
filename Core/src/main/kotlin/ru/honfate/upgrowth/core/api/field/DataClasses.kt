@@ -3,7 +3,8 @@ package ru.honfate.upgrowth.core.api.field
 data class Property(
     val id: Int,
     val name: String,
-    val foodIncrement: Int
+    val foodIncrement: Int,
+    val targetAnimalReference: Int?
 )
 
 data class Card(
@@ -14,13 +15,13 @@ data class Card(
 data class Player(
     val id: Int,
     val name: String,
-    val hand: Array<Card>,
+    val hand: MutableCollection<Card>,
     val animals: Array<Animal>
 )
 
 data class Animal(
     val id: Int,
-    val name: Int,
+    val name: String,
     val isActive: Boolean,
     val properties: Array<Property>,
     val location: Location,
@@ -32,7 +33,14 @@ data class Animal(
 data class Location(
     val id: Int,
     val name: String,
-    val animals: Array<Animal>,
+    val animals: MutableCollection<Animal>,
     val hasWater: Boolean,
-    val hasLand: Boolean
+    val hasLand: Boolean,
+    val goodsFunctions: GoodsFunctions
+)
+
+// структура данных, используемая для инициализации FieldManager
+data class FieldManagerInitializer(
+    val players: Array<Player>,
+    val locations: Array<Location>
 )
