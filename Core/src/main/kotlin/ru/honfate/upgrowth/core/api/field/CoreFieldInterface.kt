@@ -17,7 +17,7 @@ interface CoreFieldInterface {
     // Количество карт, согласно функции благ
     fun amountOfCards(player: Player, location: Location): Int
 
-    fun addAnimal(location: Location, player: Player)
+    fun addAnimal(location: Location, player: Player): Animal
     fun deleteAnimal(animal: Animal)
     fun moveAnimal(animal: Animal, destination: Location)
 

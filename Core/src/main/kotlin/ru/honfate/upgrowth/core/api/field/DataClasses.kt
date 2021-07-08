@@ -21,10 +21,10 @@ data class Player(
 
 data class Animal(
     val id: Int,
-    val name: String,
+    var name: String,
     val isActive: Boolean,
     val properties: MutableCollection<Property>,
-    val location: Location,
+    var location: Location,
     val owner: Player?,
     val foodNeeded: Int, // Количество еды, необходимое для выживания
     var foodGot: Int     // Количество еды, которое животное получило
