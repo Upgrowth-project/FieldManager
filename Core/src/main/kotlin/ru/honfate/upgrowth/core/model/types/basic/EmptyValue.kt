@@ -8,12 +8,13 @@ class EmptyValue: TypedValue {
     override val typeName = "Empty"
     override val typeInherits: Type?
         get() = null
-    override val typeGenerics: Map<String, Type>
-        get() = emptyMap()
+    override val typeGenerics: Array<Pair<String, Type>>
+        get() = emptyArray()
     override val typeValueClass: KClass<*>
         get() = Unit::class
 
     override fun buildTypedValue(data: Any?): TypedValue = this
+    override fun typeEquals(other: Type): Boolean = other is EmptyValue
 
     override fun equals(other: Any?): Boolean = other is EmptyValue
 

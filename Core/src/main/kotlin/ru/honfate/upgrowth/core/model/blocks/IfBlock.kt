@@ -11,7 +11,7 @@ class IfBlock(private val condition: BooleanConditionBlock,
 
     private val _returnType: Type =
         if (falseBranch != null &&
-            (trueBranch.returnType != falseBranch.returnType ||
+            (trueBranch.returnType.typeEquals(falseBranch.returnType) ||
             trueBranch.returnType is EmptyValue ||
             falseBranch.returnType is EmptyValue)
         ) EmptyValue()

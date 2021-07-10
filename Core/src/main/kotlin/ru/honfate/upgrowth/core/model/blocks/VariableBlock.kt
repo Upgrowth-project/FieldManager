@@ -13,6 +13,7 @@ class VariableBlock(private val variable: Variable): Block {
         get() = emptyContext()
 
     override fun run(core: Core, arguments: Context): TypedValue {
+        TODO("Think a bit more about this")
         return arguments[variable.name]?.typedValue ?:
             throw RuntimeErrorException("Unknown variable: ${variable.name}")
     }

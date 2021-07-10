@@ -2,13 +2,14 @@ package ru.honfate.upgrowth.core.model.blocks
 
 import ru.honfate.upgrowth.core.model.Core
 import ru.honfate.upgrowth.core.model.exception.TypeMismatchException
+import ru.honfate.upgrowth.core.model.types.basic.BooleanValue
 import ru.honfate.upgrowth.core.model.types.basic.NaturalValue
 
 class BooleanConditionBlock(private val block: Block): ConditionBlock {
 
     init {
-        NaturalValue.build<Boolean>().also {
-            if (block.returnType != it) throw TypeMismatchException(it, block.returnType)
+        BooleanValue().also {
+            if (!block.returnType.typeEquals(it)) throw TypeMismatchException(it, block.returnType)
         }
     }
 

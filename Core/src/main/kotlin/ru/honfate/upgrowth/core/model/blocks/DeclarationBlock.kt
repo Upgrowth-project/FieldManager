@@ -14,7 +14,7 @@ class DeclarationBlock(private val newVariable: Variable, // предуслов�
 
     init {
         if (newVariable.type is EmptyValue || initBlock == null ||
-            newVariable.type == initBlock.returnType)
+            newVariable.type.typeEquals(initBlock.returnType))
                 _returnType = newVariable.type
         else throw TypeMismatchException(newVariable.type, initBlock.returnType)
     }

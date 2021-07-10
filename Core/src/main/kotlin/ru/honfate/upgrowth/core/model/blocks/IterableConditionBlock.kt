@@ -15,8 +15,8 @@ class IterableConditionBlock(private val entryVariable: Variable,
     init {
         if (initBlock.returnType !is Iterable)
             throw TypeMismatchException("Expected iterable type, got ${initBlock.returnType.typeName}")
-        collectionType = initBlock.returnType.typeGenerics.first()
-        if (entryVariable.type !is EmptyValue && collectionType != entryVariable.type)
+        collectionType = initBlock.returnType.typeGenerics.first().second
+        if (entryVariable.type !is EmptyValue && collectionType.typeEquals(entryVariable.type))
             throw TypeMismatchException(entryVariable.type, collectionType)
     }
 

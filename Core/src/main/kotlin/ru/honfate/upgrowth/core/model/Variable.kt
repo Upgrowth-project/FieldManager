@@ -7,7 +7,7 @@ import ru.honfate.upgrowth.core.model.types.TypedValue
 
 class Variable(var type: Type, val name: String, initValue: TypedValue? = null) {
     var typedValue: TypedValue = if (initValue == null || initValue is EmptyValue) EmptyValue()
-        else if (type.typeName == initValue.typeName || type is EmptyValue) {
+        else if (type.typeEquals(initValue) || type is EmptyValue) {
             type = initValue
             initValue
     }
