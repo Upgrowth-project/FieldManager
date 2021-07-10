@@ -1,7 +1,7 @@
 package ru.honfate.upgrowth.core.model.blocks
 
 import ru.honfate.upgrowth.core.model.Core
-import ru.honfate.upgrowth.core.model.types.EmptyValue
+import ru.honfate.upgrowth.core.model.types.basic.EmptyValue
 import ru.honfate.upgrowth.core.model.types.TypedValue
 
 class PostConditionCycleBlock(private val conditionBlock: BooleanConditionBlock,

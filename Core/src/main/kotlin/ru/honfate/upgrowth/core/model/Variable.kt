@@ -1,6 +1,6 @@
 package ru.honfate.upgrowth.core.model
 
-import ru.honfate.upgrowth.core.model.types.EmptyValue
+import ru.honfate.upgrowth.core.model.types.basic.EmptyValue
 import ru.honfate.upgrowth.core.model.types.Type
 import ru.honfate.upgrowth.core.model.exception.TypeMismatchException
 import ru.honfate.upgrowth.core.model.types.TypedValue

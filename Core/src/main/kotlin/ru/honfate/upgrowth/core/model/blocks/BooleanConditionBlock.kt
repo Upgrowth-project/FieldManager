@@ -1,12 +1,15 @@
 package ru.honfate.upgrowth.core.model.blocks
 
 import ru.honfate.upgrowth.core.model.Core
-import ru.honfate.upgrowth.core.model.types.TypedValue
+import ru.honfate.upgrowth.core.model.exception.TypeMismatchException
+import ru.honfate.upgrowth.core.model.types.basic.NaturalValue
 
 class BooleanConditionBlock(private val block: Block): ConditionBlock {
 
     init {
-        TODO("Make sure that return type is boolean when boolean type will be implemented")
+        NaturalValue.build<Boolean>().also {
+            if (block.returnType != it) throw TypeMismatchException(it, block.returnType)
+        }
     }
 
     override fun isTrue(core: Core, arguments: Context): Boolean {

@@ -3,8 +3,8 @@ package ru.honfate.upgrowth.core.model.blocks
 import ru.honfate.upgrowth.core.model.Core
 import ru.honfate.upgrowth.core.model.Variable
 import ru.honfate.upgrowth.core.model.exception.TypeMismatchException
-import ru.honfate.upgrowth.core.model.types.EmptyValue
-import ru.honfate.upgrowth.core.model.types.Iterable
+import ru.honfate.upgrowth.core.model.types.basic.EmptyValue
+import ru.honfate.upgrowth.core.model.types.collection.Iterable
 import ru.honfate.upgrowth.core.model.types.Type
 
 // Условие для range-based циклов в стиле Java:
@@ -16,7 +16,7 @@ class IterableConditionBlock(private val entryVariable: Variable,
         if (initBlock.returnType !is Iterable)
             throw TypeMismatchException("Expected iterable type, got ${initBlock.returnType.typeName}")
         collectionType = initBlock.returnType.typeGenerics.first()
-        if (entryVariable.type !is EmptyValue && collectionType.typeName != entryVariable.type.typeName)
+        if (entryVariable.type !is EmptyValue && collectionType != entryVariable.type)
             throw TypeMismatchException(entryVariable.type, collectionType)
     }
 
@@ -31,5 +31,5 @@ class IterableConditionBlock(private val entryVariable: Variable,
     }
 
     override val additionalContext: Context
-        get() = mapOf(entryVariable.name to entryVariable)
+        get() = contextOf(entryVariable)
 }

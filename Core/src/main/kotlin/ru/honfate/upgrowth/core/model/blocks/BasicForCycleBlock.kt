@@ -1,7 +1,7 @@
 package ru.honfate.upgrowth.core.model.blocks
 
 import ru.honfate.upgrowth.core.model.Core
-import ru.honfate.upgrowth.core.model.types.EmptyValue
+import ru.honfate.upgrowth.core.model.types.basic.EmptyValue
 import ru.honfate.upgrowth.core.model.types.TypedValue
 
 class BasicForCycleBlock(private val initBlock: Block,
@@ -11,9 +11,10 @@ class BasicForCycleBlock(private val initBlock: Block,
 
     override fun run(core: Core, arguments: Context): TypedValue {
         val conditionContext = arguments + initBlock.additionalContext
-        val bodyContext = conditionContext + conditionBlock.additionalContext + incrementBlock.additionalContext
+        val bodyContext = (conditionContext + conditionBlock.additionalContext + incrementBlock.additionalContext)
+            .toMutableMap()
         initBlock.run(core, arguments)
-        while (conditionBlock.isTrue(core, conditionContext)) {
+        while (conditionBlock.isTrue(core, conditionContext.toMutableMap())) {
             body.run(core, bodyContext)
             incrementBlock.run(core, bodyContext)
         }
