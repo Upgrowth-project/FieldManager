@@ -1,4 +1,4 @@
-package ru.honfate.upgrowth.core.api.interpreter.types
+package ru.honfate.upgrowth.core.model.types
 
 import kotlin.reflect.KClass
 
@@ -8,16 +8,20 @@ interface Type {
     val typeGenerics: Array<Type>
     val typeValueClass: KClass<*>
 
-    fun setValue(value: Any)
-    fun getValue(): Any?
+    fun buildTypedValue(data: Any?): TypedValue
+}
+
+interface TypedValue: Type {
+    var data: Any?
 }
 
 interface Functional: Type {
     val functionalReturnType: Type
-    fun eval(args: Array<Type>): Type
+    fun eval(args: Array<TypedValue>): Type
 }
 
-interface Iterable: Type {
+interface Iterable: TypedValue {
     val size: Int
     val iterator: Iterator<*>
 }
+
