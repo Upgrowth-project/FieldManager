@@ -12,6 +12,9 @@ class Callable(val args: Array<Specification>, val body: Block)
 {
     fun match(argsGiven: Array<Type>) = args.map{ it.type }.toTypedArray().contentEquals(argsGiven)
 
+    val argTypes: Array<Type>
+    get() = args.map { it.type }.toTypedArray()
+
     fun run(core: Core, argsGiven: Array<TypedValue>): TypedValue {
         if (!match(argsGiven.toList().toTypedArray()))
             throw RuntimeErrorException("Function arguments does not match specification")

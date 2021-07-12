@@ -4,10 +4,11 @@ import ru.honfate.upgrowth.core.model.types.Type
 import ru.honfate.upgrowth.core.model.types.TypedValue
 import kotlin.reflect.KClass
 
-open class StaticRelationType(private val operands: Array<Type>, val isTerminal: Boolean = false): Type {
+open class StaticRelationType(val name: String,
+                              private val operands: Array<Type>,
+                              val isTerminal: Boolean = false): Type {
     override val typeName: String
-        get() = "StaticRelation" + _typeGenerics.map { it.second.typeName }
-            .joinToString(", ", "<", ">")
+        get() = name + _typeGenerics.joinToString(", ", "<", ">") { it.second.typeName }
 
     override val typeInherits: Type
         get() = EmptyValue()
@@ -21,14 +22,20 @@ open class StaticRelationType(private val operands: Array<Type>, val isTerminal:
         get() = Boolean::class
 
     override fun buildTypedValue(data: Any?): TypedValue = StaticRelationValue(
-        operands.map {it.buildTypedValue()}.toTypedArray(), if (data is Boolean) data else false
+        name,
+        operands.map {it.buildTypedValue()}.toTypedArray(),
+        if (data is Boolean) data else false
     )
 
-    override fun typeEquals(other: Type): Boolean = other is StaticRelationType && operands.contentEquals(other.operands)
+    override fun typeEquals(other: Type): Boolean = other is StaticRelationType &&
+            name == other.name &&
+            operands.contentEquals(other.operands)
 }
 
-class StaticRelationValue(val operands: Array<TypedValue>, private var value: Boolean, isTerminal: Boolean = false):
-    StaticRelationType(operands.toList().toTypedArray(), isTerminal),           // Ржу
+class StaticRelationValue(name: String,
+                          val operands: Array<TypedValue>,
+                          var value: Boolean, isTerminal: Boolean = false):
+    StaticRelationType(name, operands.toList().toTypedArray(), isTerminal),           // Ржу
     TypedValue {
 
     override var data: Any?
