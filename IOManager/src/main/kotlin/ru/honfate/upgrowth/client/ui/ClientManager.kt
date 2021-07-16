@@ -4,6 +4,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import ru.honfate.upgrowth.core.api.field.Player
+import ru.honfate.upgrowth.core.api.io.GameInfo
 import ru.honfate.upgrowth.core.api.io.PlayStatus
 import ru.honfate.upgrowth.core.api.io.ServerMessage
 import ru.honfate.upgrowth.core.chat.ChatEntry
@@ -46,6 +47,14 @@ class ClientManager (
         while (status()) {
             val serverMessage = messenger.asyncListening(serverInfo)
             makeAnswer(serverMessage)
+        }
+    }
+
+    private fun matchInfoMessage(infoMessage: Message) {
+        when (infoMessage.obj) {
+            is GameInfo -> serverOutput.printGameInfo(player.id, infoMessage.obj as GameInfo)
+            is ServerMessage -> serverOutput.printMessage(infoMessage.obj as ServerMessage)
+            is Array<*> -> serverOutput.updateChat(infoMessage.obj as Array<ChatEntry>)
         }
     }
 

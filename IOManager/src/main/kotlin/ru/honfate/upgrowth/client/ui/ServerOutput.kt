@@ -13,7 +13,7 @@ interface ServerOutput {
     val writer: Writer
     val players: Collection<Player>
 
-    fun printGameInfo(destination: Player, gameInfo: GameInfo) {
+    fun printGameInfo(destinationId: Int, gameInfo: GameInfo) {
 
         fun printAnimal(animal: Animal) {
             writer.write("\tЖивотное ${animal.name}\t Свойства:\n")
@@ -32,7 +32,7 @@ interface ServerOutput {
             for (player in players) {
                 writer.write("Игрок ${player.name}:\n")
                 location.animals
-                    .filter { a: Animal -> a.owner == destination}
+                    .filter { a: Animal -> a.owner == player}
                     .forEach {animal -> printAnimal(animal)}
 
             }
@@ -44,10 +44,10 @@ interface ServerOutput {
         }
 
         writer.write("\n\nКарт у других игроков:")
-        for (p in gameInfo.amountsOfCard.keys.filter { p -> p.id != destination.id })
+        for (p in gameInfo.amountsOfCard.keys.filter { p -> p.id != destinationId })
             writer.write("Игрок ${p.name}: ${gameInfo.amountsOfCard[p]}\n")
 
-        writer.write("\nВывод карт на руках у игрока ${destination.name}:\n")
+        writer.write("\nВывод карт на руках у Вас:\n")
 
         gameInfo.playerHand.forEach { card -> printCard(card) }
 

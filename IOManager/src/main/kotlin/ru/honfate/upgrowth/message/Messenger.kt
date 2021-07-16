@@ -12,6 +12,12 @@ class Messenger(private val myName: String) {
     private val MIN_PORT = 1024
     private val MAX_PORT = 65000
 
+    private val mySyncPort: Int = TODO()
+    private val myAsyncPort: Int = TODO()
+
+    private val gotMessages: MutableCollection<Message> = TODO() // Пул полученных сообщений от всех источников
+        // TODO сделать нормальную ссылку
+
     private fun checkFreePort(fp: Int): Boolean {
         return try {
             val ss = ServerSocket(fp)
@@ -35,20 +41,27 @@ class Messenger(private val myName: String) {
 
     private fun askResponse(responseFrom: PlayerInfo, messageSync: MessageSync): Message {
         // TODO доступ к разделяемому ресурсу корректен?
-        val address = when (messageSync) {
-            MessageSync.ASYNC -> responseFrom.asyncAddress
-            MessageSync.SYNC -> responseFrom.syncAddress
+        val port = when (messageSync) {
+            MessageSync.ASYNC -> myAsyncPort
+            MessageSync.SYNC -> mySyncPort
         }
 
-        val socket: Socket = Socket(address.ipAddress, address.port)
+        val res = gotMessages.find {m: Message -> m.playerName == responseFrom.name}
+        if (res != null) {
+            gotMessages.remove(res)
+            return res
+        }
+
+        val socket: ServerSocket = ServerSocket(port)
 
         socket.use { socket ->
             do {
-                val responseStream = BufferedReader(InputStreamReader(socket.getInputStream()))
+                val responseStream = BufferedReader(InputStreamReader(socket.accept().getInputStream()))
                 val res = Message().toObject(responseStream.readText())
                 if (res.playerName == responseFrom.name) {
                     return res
                 }
+                gotMessages.add(res)
             } while (true)
         }
     }
