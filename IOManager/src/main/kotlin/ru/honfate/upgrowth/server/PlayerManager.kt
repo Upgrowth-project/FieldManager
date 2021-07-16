@@ -10,11 +10,11 @@ import ru.honfate.upgrowth.message.Messenger
 // предназначенный для отправки ему сообщений и получения ответов
 class PlayerManager(
     private val serverName: String, // имя сервера
-    val playerInfo: PlayerInfo // информация об игроке, менеджером которого является данный объект
+    val playerInfo: PlayerInfo, // информация об игроке, менеджером которого является данный объект
+    private val player: Player,
+    private val playerInput: PlayerInputInterface
 ) {
-    private val player: Player = TODO()
     private val messenger: Messenger = Messenger(serverName)
-    private val playerInput: PlayerInputInterface = TODO()
 
     private suspend fun asyncListen() {
         while (playerInput.getPlayStatus() == PlayStatus.IS_ON) {
@@ -24,23 +24,8 @@ class PlayerManager(
     }
 
     private fun makeAnswer(msg: Message) {
-        val obj = msg.obj
-
+        // ответить на сообщение
         when(msg.type) {
-            SendingMessageType.INFO -> TODO()
-
-            SendingMessageType.CHOOSE_ONE -> TODO()
-
-            SendingMessageType.CHOOSE_ONE_OR_NONE -> TODO()
-
-            SendingMessageType.CHOOSE_SET -> TODO()
-
-            SendingMessageType.CHOOSE_SEQUENCE -> TODO()
-
-            SendingMessageType.ASK_YES_NO -> TODO()
-
-            SendingMessageType.ASK_STRING -> TODO()
-
             SendingMessageType.PLAY_STATUS -> messenger.send(
                 playerInput.getPlayStatus(),
                 SendingMessageType.PLAY_STATUS,
@@ -50,16 +35,10 @@ class PlayerManager(
 
             SendingMessageType.RESUME_GAME -> playerInput.requestedPause(player)
 
-            SendingMessageType.END_GAME -> TODO()
-
             SendingMessageType.DISCONNECT -> playerInput.disconnected(player)
 
             SendingMessageType.LEAVE -> playerInput.cleanExited(player)
         }
-    }
-
-    fun sendMessage(msg: String) {
-        messenger.send(msg, SendingMessageType.INFO, playerInfo)
     }
 
     suspend fun <T> chooseOne(possibilities: Set<T>, timeout: Int): T {
