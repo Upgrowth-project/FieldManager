@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9d2208fc-b9e4-4b38-b8b4-0ac86a437d1c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/FieldManager/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FieldManager/src/main/kotlin/field/LocationGoodsFunctions.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8/fileChanges/last-build.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/configuration-cache/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/vcs-1/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Upgrowth-console.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Upgrowth-console.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/.idea/codeStyles/Project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FieldManager/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FieldManager/docs/images/struct.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FieldManager/docs/index.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FieldManager/docs/utils/struct.drawio" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FieldManager/src/main/kotlin/field/Field.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FieldManager/src/main/kotlin/field/Field.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FieldManager/src/main/kotlin/field/FieldManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FieldManager/src/main/kotlin/field/FieldManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FieldManager/src/main/kotlin/field/animalActionHandler/AnimalAction.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FieldManager/src/main/kotlin/field/animalActionHandler/AnimalActionHandler.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FieldManager/src/main/kotlin/field/location/GoodsFunctions.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FieldManager/src/main/kotlin/field/location/Location.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FieldManager/src/main/kotlin/field/location/LocationTopology.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FieldManager/src/main/kotlin/field/location/animal/BaseAnimal.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FieldManager/src/main/kotlin/field/location/animal/PlayerAnimal.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FieldManager/src/main/kotlin/field/location/animal/attribute/AnimalActionType.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FieldManager/src/main/kotlin/field/location/animal/attribute/AnimalPossibleAction.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FieldManager/src/main/kotlin/field/location/animal/attribute/Attribute.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FieldManager/src/main/kotlin/field/location/animal/attribute/Characteristics.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FieldManager/src/main/kotlin/field/utils/StaticFunctions.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReglamentManager/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReglamentManager/src/main/kotlin/playControl/Phase.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReglamentManager/src/main/kotlin/playControl/PlayControl.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReglamentManager/src/main/kotlin/rules/AttackRules.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReglamentManager/src/main/kotlin/rules/reglamentRules.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainModule/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainModule/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainModule/settings.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainModule/src/main/kotlin/field/Field.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainModule/src/main/kotlin/field/FieldManager.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainModule/src/main/kotlin/field/animalActionHandler/AnimalAction.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainModule/src/main/kotlin/field/animalActionHandler/AnimalActionHandler.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainModule/src/main/kotlin/field/location/GoodsFunctions.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainModule/src/main/kotlin/field/location/Location.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainModule/src/main/kotlin/field/location/LocationTopology.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainModule/src/main/kotlin/field/location/animal/BaseAnimal.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainModule/src/main/kotlin/field/location/animal/PlayerAnimal.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainModule/src/main/kotlin/field/location/animal/attribute/AnimalActionType.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainModule/src/main/kotlin/field/location/animal/attribute/AnimalPossibleAction.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainModule/src/main/kotlin/field/location/animal/attribute/Attribute.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainModule/src/main/kotlin/field/location/animal/attribute/Characteristics.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainModule/src/main/kotlin/field/utils/StaticFunctions.kt" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Upgrowth-console" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Upgrowth-console" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/FieldManager" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="KotlinCodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1vLd58Ubds7xBFMxYPzJMEHboN4" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.language" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9d2208fc-b9e4-4b38-b8b4-0ac86a437d1c" name="Default Changelist" comment="" />
+      <created>1626345123637</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1626345123637</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
