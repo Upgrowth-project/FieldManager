@@ -5,7 +5,9 @@ import ru.honfate.upgrowth.core.api.io.*
 import ru.honfate.upgrowth.core.chat.ChatEntry
 
 class PlayersDispatcher(serverName: String,
-                        playerInfs: Array<PlayerInfo>):
+                        playerInfs: Array<Pair<PlayerInfo, Player>>,
+                        private val playerInput: PlayerInputInterface
+):
     PlayerInputRequestInterface, ServerOutputInterface {
 
     override var defaultTimeout: Int = 5
@@ -13,10 +15,7 @@ class PlayersDispatcher(serverName: String,
     override var timeOut: Int = defaultTimeout
 
     private val playerManagers: Collection<PlayerManager> =
-        List(playerInfs.size) { i -> PlayerManager(serverName, playerInfs[i]) }
-
-    private val playerInput: PlayerInputInterface = TODO()
-
+        List(playerInfs.size) { i -> PlayerManager(serverName, playerInfs[i].first, playerInfs[i].second, playerInput) }
 
     private fun findManager(actor: Player): PlayerManager {
         return playerManagers.find { pm -> pm.playerInfo.playerId == actor.id } !!
