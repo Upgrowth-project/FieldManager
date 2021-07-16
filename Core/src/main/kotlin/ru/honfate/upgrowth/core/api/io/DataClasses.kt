@@ -13,6 +13,10 @@ enum class MessageType {
     GameStarted, GameEnded, GamePaused, GameResumed
 }
 
+enum class PlayStatus {
+    IS_ON, ENDED
+}
+
 data class GameInfo(
     val locations: Array<Location>,      // все локации, то есть вся информация о том, что на столе
     val playerHand: Array<Card>,         // карты на руке у игрока

@@ -10,18 +10,18 @@ interface PlayerInputRequestInterface {
     var timeOut: Int
 
     // Указанный игрок выбирает один вариант из возможных
-    fun <T> chooseOne(possibilities: Set<T>,
+    suspend fun <T> chooseOne(possibilities: Set<T>,
                       actor: Player = player,
                       timeout: Int = timeOut): T
     // Указанный игрок выбирает один вариант из возможных или отменяет
     // операцию. В случае отмены возвращается null
-    fun <T> chooseOneOrNone(possibilities: Set<T>,
+    suspend fun <T> chooseOneOrNone(possibilities: Set<T>,
                             actor: Player = player,
                             timeout: Int = timeOut): T?
 
     // Указанный игрок выбирает несколько вариантов из возможных
     // Возвращается множество размером [minNumber; maxNumber]
-    fun <T> chooseSet(possibilities: Set<T>,
+    suspend fun <T> chooseSet(possibilities: Set<T>,
                       actor: Player = player,
                       timeout: Int = timeOut,
                       minNumber: Int = 0,
@@ -31,7 +31,9 @@ interface PlayerInputRequestInterface {
     // Указанный игрок выбирает последовательность вариантов из возможных
     // Возвращается массив размером [minNumber; maxNumber]
     // Пока правда это нигде не нужно, но штукенция прикольная
-    fun <T> chooseSequence(possibilities: Set<T>,
+
+    suspend fun <T> chooseSequence(possibilities: Set<T>,
+
                            actor: Player = player,
                            timeout: Int = timeOut,
                            minNumber: Int = 0,
@@ -39,14 +41,18 @@ interface PlayerInputRequestInterface {
     ): Array<T>
 
     // Вопрос игроку да/нет. Игроку показывается вопрос invitation
-    fun yesNo(actor: Player = player,
+
+    suspend fun yesNo(actor: Player = player,
+
               invitation: String = "",
               timeout: Int = timeOut
     ): PlayerAnswers
 
     // Ввод текстового значения. Игроку показывается вопрос invitation
     // результат должет быть не больше maxLength
-    fun inputString(actor: Player = player,
+
+    suspend fun inputString(actor: Player = player,
+
                     invitation: String = "",
                     maxLength: Int = 1024   // не будет же он_а Войну и Мир писать
     ): String

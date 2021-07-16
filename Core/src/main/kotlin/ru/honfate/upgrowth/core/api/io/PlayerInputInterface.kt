@@ -12,4 +12,6 @@ interface PlayerInputInterface {
     fun cleanExited(player: Player)
     @Deprecated("шутка") fun rageQuit(player: Player)
     fun disconnected(player: Player)
+
+    fun getPlayStatus(): PlayStatus
 }
