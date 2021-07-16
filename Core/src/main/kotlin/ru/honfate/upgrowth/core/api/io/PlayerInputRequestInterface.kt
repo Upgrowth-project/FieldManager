@@ -31,7 +31,9 @@ interface PlayerInputRequestInterface {
     // Указанный игрок выбирает последовательность вариантов из возможных
     // Возвращается массив размером [minNumber; maxNumber]
     // Пока правда это нигде не нужно, но штукенция прикольная
+
     suspend fun <T> chooseSequence(possibilities: Set<T>,
+
                            actor: Player = player,
                            timeout: Int = timeOut,
                            minNumber: Int = 0,
@@ -39,14 +41,18 @@ interface PlayerInputRequestInterface {
     ): Array<T>
 
     // Вопрос игроку да/нет. Игроку показывается вопрос invitation
+
     suspend fun yesNo(actor: Player = player,
+
               invitation: String = "",
               timeout: Int = timeOut
     ): PlayerAnswers
 
     // Ввод текстового значения. Игроку показывается вопрос invitation
     // результат должет быть не больше maxLength
+
     suspend fun inputString(actor: Player = player,
+
                     invitation: String = "",
                     maxLength: Int = 1024   // не будет же он_а Войну и Мир писать
     ): String
