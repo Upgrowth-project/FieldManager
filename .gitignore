@@ -1,0 +1,32 @@
+# Eclipse
+.classpath
+.project
+.settings/
+.metadata/
+.recommenders/
+bin/
+
+# Intellij
+*/.idea/
+*.iml
+*.iws
+
+# VS Code
+.vscode/
+
+# Mac
+.DS_Store
+.bash_profile
+
+# Gradle
+*/.gradle
+*/classes/
+/*/out/
+/out/
+**/target/
+.gradletasknamecache
+**/build/
+
+# Log files
+*.log
+logs/
