@@ -18,7 +18,6 @@
 
 | Метод | Описание |
 |------|------------|
-| <T> refresh(entity: T): T | чево |
 | giveCards(player: Player, number: Int) | дать игроку определенное количество карт |
 | amountOfCards(player: Player, location: Location): Int | количество карт, которое должен получить игрок за данную локацию |
 | addAnimal(location: Location, player: Player): Animal | создать в локации новое животное игрока и вернуть его |
@@ -66,6 +65,17 @@
 
 Архитектура системы ввода/вывода приведена на рисунке ниже. 
 ![Архитектура системы ввода/вывода](./images/clientServerInterface.png)
+Диспетчер игроков реализует интерфейсы PlayerInputRequestedInterface, ServerOutputInterface для вывода сообщений пользователю (PlayerInputRequestedInterface -- запросы пользовательского ввода).
+Диспетчер получает на вход интерфейс PlayerInputInterface для обращений к функциям ядра. Эти обращения фактически выполняются менеджерами игроков.
+
+Сообщения или запросы к пользователю вызывают функцию запроса для соответствующего менеджера игрока, который при помощи своего мессенджера отправляет клиенту запрос (сообщение).
+На клиентской стороне работает менеджер клиента, который ожидает асинхронного сообщения от сервера при помощи своего клиентского мессенджера.
+
+Менеджер клиента также ожидает асинхронного ввода от пользователя от объекта PlayerAsyncInput. Если менеджер получил запрос пользовательского ввода от сервера 
+(пойманный клиентским мессенджером), то он запрашивает пользовательский ввод от объекта PlayerInputRequested, после чего отправляет ответ через свой мессенджер.
+Если менеджер получил сообщение от сервера без запроса ввода, то он выводит его клиенту с помощью ServerOutput.
+
+В рамках данного проекта ввод/вывод пользователя происходит с использованием консольного интерфейса.
 
 ### Messenger
 
@@ -212,14 +222,140 @@ class Message() {
 }
 ```
 
+### ClientManager 
+
+ClientManager -- объект, управляющий вводом/выводом на стороне клиента. Класс позволяет перехватывать асинхронные и синхронные запросы
+и формировать ответную реакцию в случае необходимости (или просто выводить присланное сообщение с помощью ServerOutput). Асинхронный запрос 
+от сервера может потребовать пользовательского ввода, который получается с помощью PlayerInputRequested.
+
+Класс содержит перехватчик асинхронных запросов от пользователя PlayerAsyncInput.
+
+```kotlin
+class ClientManager (
+    val player: Player,
+    private val serverInfo: PlayerInfo) {
+
+    private val input: PlayerAsyncInput = TODO()
+    private val requesterInput: PlayerInputRequested = TODO()
+    private val serverOutput: ServerOutput = TODO()
+    private val messenger: Messenger = Messenger(player.name)
+
+    suspend fun run() = coroutineScope {
+        launch(Dispatchers.IO) { asyncListen() } // слушать сообщения от сервера
+        runAsyncInput() // слушать асинхронный ввод пользователя
+    }
+
+    // статус игры
+    private suspend fun status(): Boolean {
+        messenger.send("", SendingMessageType.PLAY_STATUS, serverInfo)
+        return (messenger.waitForResponse(serverInfo) as Message).obj as PlayStatus == PlayStatus.IS_ON
+    }
+
+    private suspend fun runAsyncInput() {
+        while (status()) {
+            input.asyncMenu(this)
+        }
+    }
+
+    private fun disconnect() {
+        // TODO()
+    }
+
+    private suspend fun asyncListen() {
+        while (status()) {
+            val serverMessage = messenger.asyncListening(serverInfo)
+            makeAnswer(serverMessage)
+        }
+    }
+
+    private fun matchInfoMessage(infoMessage: Message) {
+        when (infoMessage.obj) {
+            is GameInfo -> serverOutput.printGameInfo(player.id, infoMessage.obj as GameInfo)
+            is ServerMessage -> serverOutput.printMessage(infoMessage.obj as ServerMessage)
+            is Array<*> -> serverOutput.updateChat(infoMessage.obj as Array<ChatEntry>)
+        }
+    }
+
+    private fun makeAnswer(msg: Message) {
+        when (msg.type) {
+            SendingMessageType.INFO -> serverOutput.printMessage(msg.obj as ServerMessage)
+
+            SendingMessageType.CHOOSE_ONE -> messenger.send(requesterInput.chooseOne(msg.obj as Set<*>),
+                SendingMessageType.CHOOSE_ONE, serverInfo, MessageSync.SYNC)
+
+            SendingMessageType.CHOOSE_ONE_OR_NONE -> messenger.send(
+                requesterInput.chooseOneOrNone(msg.obj as Set<*>),
+                SendingMessageType.CHOOSE_ONE_OR_NONE, serverInfo, MessageSync.SYNC)
+
+            SendingMessageType.CHOOSE_SET -> messenger.send(requesterInput.chooseSet(
+                    (msg.obj as ChooseCollectionParams<*>).possibilities,
+                    (msg.obj as ChooseCollectionParams<*>).range.first,
+                    (msg.obj as ChooseCollectionParams<*>).range.last
+                ), SendingMessageType.CHOOSE_SET, serverInfo, MessageSync.SYNC)
+
+            SendingMessageType.CHOOSE_SEQUENCE -> {} // раз нигде не используется, то и фиг с ним
+
+            SendingMessageType.ASK_YES_NO -> messenger.send(requesterInput.yesNo(msg.obj as String),
+                SendingMessageType.ASK_YES_NO, serverInfo, MessageSync.SYNC)
+
+            SendingMessageType.ASK_STRING -> messenger.send(requesterInput.inputString(
+                    (msg.obj as AskStringParams).invitation,
+                    (msg.obj as AskStringParams).maxLen
+                ), SendingMessageType.ASK_STRING, serverInfo, MessageSync.SYNC)
+
+            SendingMessageType.PAUSE_GAME -> serverOutput.pauseGame(msg.obj as Int)
+
+            SendingMessageType.RESUME_GAME -> serverOutput.resumeGame()
+
+            SendingMessageType.END_GAME -> serverOutput.endGame()
+
+            SendingMessageType.DISCONNECT -> disconnect()
+            SendingMessageType.LEAVE -> serverOutput.leave(msg.obj as String)
+        }
+    }
+
+    fun newChatEntry(message: ChatEntry){
+        messenger.send(message, SendingMessageType.INFO, serverInfo)
+    }
+
+    fun requestedPause(){
+        messenger.send("", SendingMessageType.PAUSE_GAME, serverInfo)
+    }
+
+    fun resumedGame(){
+        messenger.send("", SendingMessageType.RESUME_GAME, serverInfo)
+    }
+
+    fun cleanExited(){
+        leave()
+    }
+
+    @Deprecated("шутка")
+    fun rageQuit(){
+        // TODO добавить шутку
+        leave()
+    }
+
+    fun disconnected(){
+        messenger.send("", SendingMessageType.DISCONNECT, serverInfo)
+    }
+
+    private fun leave(){
+        messenger.send(player.name, SendingMessageType.LEAVE, serverInfo)
+    }
+}
+```
+
+
 ### PlayerManager
 
 PlayerManager представляет собой интерфейс взаимодействия сервера с пользователем, предназначенный для отправки ему сообщений и получения ответов.
-PlayerManager содержит имя сервера для инициализации объекта Messenger, информацию об игроке, менеджером которого является данный объект, а так же 
+PlayerManager находится на серверной стороне, он содержит имя сервера для инициализации объекта Messenger, информацию об игроке, менеджером которого является данный объект, а так же 
 ссылку на интерфейс PlayerInputInterface, полученную от ядра.
 
+При помощи PlayerInputInterface PlayerManager может выполнять асинхронные запросы к ядру (поступающие от ClientManager).
+
 Класс содержит функции, почти совпадающие с функциями PlayerInputRequestedInterface и ServerOutputInterface (его функции не принимают объект Player).
-<code>[spoiler]
 ```kotlin
 class PlayerManager(
     private val serverName: String, // имя сервера
@@ -321,9 +457,140 @@ class PlayerManager(
     }
 }
 ```
-[/spoiler]
-</code>
 
+### PlayersDispatcher
 
+Класс реализует интерфейсы для взаимодействия ядра и пользователя. Класс позволяет выводить игрокам сообщения, посылать асинхронные запросы
+пользовательского ввода. Класс содержит коллекцию объектов PlayerManager. Асинхронный ввод пользователей выполняется в PlayerManager.
+Синхронный ответ пользователю так же реализован в PlayerManager.
 
+Функциональность класса реализована следующим образом: выполняется поиск PlayerManager, для которого (которых) следует выполнить асинхронный запрос,
+после чего для него (для них) выполняется соответствующий запрос.
 
+```kotlin
+class PlayersDispatcher(serverName: String,
+                        playerInfs: Array<Pair<PlayerInfo, Player>>,
+                        private val playerInput: PlayerInputInterface
+):
+    PlayerInputRequestInterface, ServerOutputInterface {
+
+    override var defaultTimeout: Int = 5
+    override var player: Player = TODO() // чё
+    override var timeOut: Int = defaultTimeout
+
+    private val playerManagers: Collection<PlayerManager> =
+        List(playerInfs.size) { i -> PlayerManager(serverName, playerInfs[i].first, playerInfs[i].second, playerInput) }
+
+    private fun findManager(actor: Player): PlayerManager {
+        return playerManagers.find { pm -> pm.playerInfo.playerId == actor.id } !!
+    }
+
+    override suspend fun <T> chooseOne(possibilities: Set<T>, actor: Player, timeout: Int): T {
+        return findManager(actor).chooseOne(possibilities, timeout)
+    }
+
+    override suspend fun <T> chooseOneOrNone(possibilities: Set<T>, actor: Player, timeout: Int): T? {
+        return findManager(actor).chooseOneOrNone(possibilities, timeout)
+    }
+
+    override suspend fun <T> chooseSet(
+        possibilities: Set<T>,
+        actor: Player,
+        timeout: Int,
+        minNumber: Int,
+        maxNumber: Int
+    ): Set<T> {
+        return findManager(actor).chooseSet(possibilities, timeout, minNumber, maxNumber)
+    }
+
+    override suspend fun <T> chooseSequence(
+        possibilities: Set<T>,
+        actor: Player,
+        timeout: Int,
+        minNumber: Int,
+        maxNumber: Int
+    ): Array<T> {
+        return findManager(actor).chooseSequence(possibilities, timeout, minNumber, maxNumber)
+
+    }
+
+    override suspend fun yesNo(actor: Player, invitation: String, timeout: Int): PlayerAnswers {
+        return findManager(actor).yesNo(invitation, timeout)
+    }
+
+    override suspend fun inputString(actor: Player, invitation: String, maxLength: Int): String {
+        return findManager(actor).inputString(invitation, maxLength)
+    }
+
+    override fun sendGameInfo(destination: Player, gameInfo: GameInfo) {
+        findManager(destination).sendGameInfo(gameInfo)
+    }
+
+    override fun updateChat(chat: Array<ChatEntry>) {
+        playerManagers.forEach {pm -> pm.updateChat(chat)}
+    }
+
+    override fun sendMessage(destination: Player, message: ServerMessage) {
+        findManager(destination).sendMessage(message)
+    }
+
+    override fun pauseGame(timeout: Int?) {
+        playerManagers.forEach {pm -> pm.pauseGame(timeout)}
+    }
+
+    override fun resumeGame() {
+        playerManagers.forEach {pm -> pm.resumeGame()}
+    }
+
+    override fun endGame() {
+        playerManagers.forEach {pm -> pm.endGame()}
+    }
+}
+```
+
+### Вспомогательные классы и интерфейсы
+
+| Класс/интерфейс | Описание |
+|------|------------|
+| interface ServerOutput | Вывод сообщений от сервера |
+| interface PlayerInputRequested | Запрос пользовательского ввода от сервера |
+| class PlayerAsyncInput | Асинхронный ввод пользователя |
+
+### enum и data классы
+
+```kotlin
+data class PlayerInfo(
+    val playerId: Int,
+    val name: String,
+    val syncAddress: PlayerAddress,
+    val asyncAddress: PlayerAddress
+)
+
+fun serverInfo(syncAddress: PlayerAddress, asyncAddress: PlayerAddress): PlayerInfo {
+    return PlayerInfo(-1, "SERVER", syncAddress, asyncAddress)
+}
+
+data class PlayerAddress(
+    val ipAddress: String,
+    val port: Int
+)
+
+data class ChooseCollectionParams<T>(
+    val possibilities: Set<T>,
+    val range: IntRange
+)
+
+data class AskStringParams(
+    val invitation: String,
+    val maxLen: Int
+)
+
+enum class SendingMessageType {
+    INFO, CHOOSE_ONE, CHOOSE_ONE_OR_NONE, CHOOSE_SET, CHOOSE_SEQUENCE, ASK_YES_NO, ASK_STRING, PLAY_STATUS,
+    PAUSE_GAME, RESUME_GAME, END_GAME, DISCONNECT, LEAVE
+}
+
+enum class MessageSync {
+    ASYNC, SYNC
+}
+```
